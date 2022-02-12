@@ -1,6 +1,6 @@
 {
     "name": "jlabno/annotations-scanner",
-    "description": "Annotated files scanner",
+    "description": "Annotated files scanner - looks for methods annotated with provided annotations, outputs an array of either filepaths or directories.",
     "keywords": ["library", "php", "annotation", "scanner", "finder"],
     "license": "MIT",
     "type": "library",
