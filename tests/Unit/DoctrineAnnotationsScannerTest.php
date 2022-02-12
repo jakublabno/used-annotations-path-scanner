@@ -20,7 +20,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
     /**
      * @test
      */
-    public function find_only_pointed_annotations_from_directory(): void
+    public function find_paths_only_pointed_annotations_from_directory(): void
     {
         $scanner = $this->giveScannerWithoutCache('/app/tests/Fixture', FirstAnnotation::class);
 
@@ -34,7 +34,21 @@ class DoctrineAnnotationsScannerTest extends TestCase
     /**
      * @test
      */
-    public function find_only_first_and_second_annotations_from_strict_directory(): void
+    public function find_dirs_only_pointed_annotations_from_directory(): void
+    {
+        $scanner = $this->giveScannerWithoutCache('/app/tests/Fixture', FirstAnnotation::class);
+
+        $foundPaths = $scanner->scan()->getFileDirs();
+
+        $expectedPath = '/app/tests/Fixture/Classes/AnnotatedWithFirstAndSecondAnnotation';
+        $this->assertCount(1, $foundPaths);
+        $this->assertContains($expectedPath, $foundPaths);
+    }
+
+    /**
+     * @test
+     */
+    public function find_paths_only_first_and_second_annotations_from_strict_directory(): void
     {
         $scanner = $this->giveScannerWithoutCache(
             '/app/tests/Fixture/Classes/AnnotatedWithFirstAndSecondAnnotation',
@@ -53,7 +67,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
     /**
      * @test
      */
-    public function find_only_third_annotations_from_strict_directory(): void
+    public function find_paths_only_third_annotations_from_strict_directory(): void
     {
         $scanner = $this->giveScannerWithoutCache(
             '/app/tests/Fixture/Classes/AnnotatedWithThirdAnnotation',

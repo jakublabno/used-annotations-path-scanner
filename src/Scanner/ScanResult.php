@@ -20,6 +20,8 @@ class ScanResult
 
     public function getFileDirs(): array
     {
-
+        return array_map(function (string $filePath): string {
+            return dirname($filePath);
+        }, $this->getFilePaths());
     }
 }
