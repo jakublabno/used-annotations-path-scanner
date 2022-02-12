@@ -17,7 +17,8 @@
     "authors": [
         {
             "name": "Jakub Łabno",
-            "email": "kwas@outlook.com"
+            "email": "kwas@outlook.com",
+            "homepage": "https://github.com/jakublabno"
         }
     ],
     "require": {
