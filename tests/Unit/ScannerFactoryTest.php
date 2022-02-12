@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AnnotationsScanner\Tests\Unit;
 
-use AnnotationsScanner\Scanner\CachedDoctrineAnnotationsScanner;
 use AnnotationsScanner\Scanner\ScannerFactory;
 use AnnotationsScanner\Tests\Fixture\Annotations\FirstAnnotation;
 use AnnotationsScanner\Tests\Fixture\Annotations\ThirdAnnotation;
