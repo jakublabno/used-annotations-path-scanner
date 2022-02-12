@@ -8,7 +8,7 @@ use Doctrine\Common\Annotations\Reader;
 use Psr\SimpleCache\CacheInterface;
 
 class ScannerFactory
-{
+{//TODO allow skipping directories (regex)
     public static function createWithDefaultReader(string $basePath, string ...$annotations): AnnotationScanner
     {
         return (new ScannerBuilder())
