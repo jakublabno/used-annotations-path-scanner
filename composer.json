@@ -1,6 +1,8 @@
 {
     "name": "jlabno/annotations-scanner",
     "description": "Annotated files scanner",
+    "keywords": ["library", "php", "annotation", "scanner", "finder"],
+    "license": "MIT",
     "type": "library",
     "autoload": {
         "psr-4": {
