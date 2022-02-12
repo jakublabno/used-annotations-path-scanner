@@ -11,4 +11,4 @@ build: ## install & update dependencies
 	docker-compose run --rm -T php composer update
 
 test: build ## run tests
-	docker-compose run -T php php vendor/bin/phpunit --configuration phpunit.dist.xml
+	docker-compose run -T php php /app/vendor/bin/phpunit --configuration phpunit.dist.xml
