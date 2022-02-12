@@ -1,5 +1,6 @@
 {
     "name": "jlabno/annotations-scanner",
+    "description": "Annotated files scanner",
     "type": "library",
     "autoload": {
         "psr-4": {
