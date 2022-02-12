@@ -1,5 +1,5 @@
 {
-    "name": "jakublabno/annotations-scanner",
+    "name": "jlabno/annotations-scanner",
     "type": "library",
     "autoload": {
         "psr-4": {
