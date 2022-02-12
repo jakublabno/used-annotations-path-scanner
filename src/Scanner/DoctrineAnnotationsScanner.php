@@ -71,6 +71,10 @@ class DoctrineAnnotationsScanner implements AnnotationScanner
      */
     private function getMethods(string $className): ?array
     {
+        if (!class_exists($className)) {
+            return null;
+        }
+
         $reflectedClass = new ReflectionClass($className);
 
         return $reflectedClass->getMethods() ?: null;
