@@ -37,6 +37,13 @@ class ScannerBuilder
         return $this;
     }
 
+    public function withCache(CacheInterface $cache): self
+    {
+        $this->cache = $cache;
+
+        return $this;
+    }
+
     public function build(): AnnotationScanner
     {
         if (!isset($this->basePath)) {

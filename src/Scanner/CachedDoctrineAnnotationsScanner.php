@@ -8,7 +8,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class CachedDoctrineAnnotationsScanner implements AnnotationScanner
 {
-    private const CACHE_KEY = 'annotation_scanner';
+    public const CACHE_KEY = 'annotation_scanner';
 
     private AnnotationScanner $nativeScanner;
     private CacheInterface $cache;
