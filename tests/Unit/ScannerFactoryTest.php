@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AnnotationsScanner\Tests\Unit;
 
 use AnnotationsScanner\Scanner\ScannerFactory;
+use AnnotationsScanner\Scanner\ScanResult;
 use AnnotationsScanner\Tests\Fixture\Annotations\FirstAnnotation;
 use AnnotationsScanner\Tests\Fixture\Annotations\ThirdAnnotation;
 use AnnotationsScanner\Tests\Mother\FakeCacheMother;
@@ -17,9 +18,9 @@ class ScannerFactoryTest extends TestCase
      */
     public function use_provided_cache(): void
     {
-        $expectedResult = [
+        $expectedResult = new ScanResult([
             '/app/tests/Fixture/Classes/AnnotatedWithThirdAnnotation/ClassWithAnnotatedMethodsThird.php',
-        ];
+        ]);
         $cache = FakeCacheMother::withResult($expectedResult);
         $scanner = ScannerFactory::createWithDefaultReaderAndCache(
             '/app/tests/Fixture/Classes/AnnotatedWithFirstAndSecondAnnotation',

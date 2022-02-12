@@ -6,8 +6,5 @@ namespace AnnotationsScanner\Scanner;
 
 interface AnnotationScanner
 {
-    /**
-     * @return string[]
-     */
-    public function scan(): array;
+    public function scan(): ScanResult;
 }

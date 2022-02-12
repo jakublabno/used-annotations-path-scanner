@@ -26,7 +26,7 @@ class DoctrineAnnotationsScanner implements AnnotationScanner
         $this->annotationReader = $reader ?? new AnnotationReader();
     }
 
-    public function scan(): array
+    public function scan(): ScanResult
     {
         /**
          * @var $foundMethods ReflectionMethod[]
@@ -45,7 +45,7 @@ class DoctrineAnnotationsScanner implements AnnotationScanner
             $filesPaths[] = $this->getUsedAnnotationsClassPaths(...$foundMethod);
         }
 
-        return array_unique(array_merge(...$filesPaths));
+        return new ScanResult(array_unique(array_merge(...$filesPaths)));
     }
 
     private function getUsedAnnotationsClassPaths(ReflectionMethod ...$reflectionMethod): array

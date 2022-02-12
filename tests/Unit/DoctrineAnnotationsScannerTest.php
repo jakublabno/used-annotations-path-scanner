@@ -24,7 +24,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
     {
         $scanner = $this->giveScannerWithoutCache('/app/tests/Fixture', FirstAnnotation::class);
 
-        $foundPaths = $scanner->scan();
+        $foundPaths = $scanner->scan()->getFilePaths();
 
         $expectedPath = $this->getPathOfClass(ClassWithAnnotatedMethodsFirstAndSecond::class);
         $this->assertCount(1, $foundPaths);
@@ -43,7 +43,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
             ThirdAnnotation::class,
         );
 
-        $foundPaths = $scanner->scan();
+        $foundPaths = $scanner->scan()->getFilePaths();
 
         $expectedPath = $this->getPathOfClass(ClassWithAnnotatedMethodsFirstAndSecond::class);
         $this->assertCount(1, $foundPaths);
@@ -62,7 +62,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
             ThirdAnnotation::class,
         );
 
-        $foundPaths = $scanner->scan();
+        $foundPaths = $scanner->scan()->getFilePaths();
 
         $expectedPath = $this->getPathOfClass(ClassWithAnnotatedMethodsThird::class);
         $this->assertCount(1, $foundPaths);
@@ -81,7 +81,7 @@ class DoctrineAnnotationsScannerTest extends TestCase
             ThirdAnnotation::class,
         );
 
-        $foundPaths = $scanner->scan();
+        $foundPaths = $scanner->scan()->getFilePaths();
 
         $this->assertEmpty($foundPaths);
     }

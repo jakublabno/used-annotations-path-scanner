@@ -19,7 +19,7 @@ class CachedDoctrineAnnotationsScanner implements AnnotationScanner
         $this->cache = $cache;
     }
 
-    public function scan(): array
+    public function scan(): ScanResult
     {
         $key = self::CACHE_KEY;
 
