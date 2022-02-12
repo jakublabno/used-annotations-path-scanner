@@ -16,4 +16,6 @@ COPY build/php.ini /usr/local/etc/php/
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+COPY . /app
+
 WORKDIR /app
