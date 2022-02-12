@@ -4,7 +4,6 @@ Annotated methods scanner
 Scanner looks for methods annotated with provided annotations, outputs an array of either filepaths or directories.
 
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
-[![License](https://img.shields.io/packagist/l/goaop/framework.svg)](https://packagist.org/packages/goaop/framework)
 
 Installation
 ------------
