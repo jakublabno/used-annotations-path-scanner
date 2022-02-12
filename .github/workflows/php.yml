@@ -26,8 +26,5 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: build
-      run: make build
-
     - name: Run test suite
       run: make test

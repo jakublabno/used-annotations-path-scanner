@@ -7,8 +7,10 @@ help:
 
 .DEFAULT_GOAL := help
 
-build: ## install & update dependencies
+
+install-dependencies: ##install and update composer dependencies
 	docker-compose run --rm -T php composer update
 
-test: build ## run tests
-	docker-compose run -T php php vendor/bin/phpunit --configuration phpunit.dist.xml
+
+test: install-dependencies ## run tests
+	docker-compose run --rm -T php php vendor/bin/phpunit --configuration phpunit.dist.xml
