@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace AnnotationsScanner\Scanner;
 
+use Scanner\ScanMode\ScanMode;
+
 interface AnnotationScanner
 {
-    public function scan(): ScanResult;
+    public function scan(ScanMode $mode = null): ScanResult;
 }

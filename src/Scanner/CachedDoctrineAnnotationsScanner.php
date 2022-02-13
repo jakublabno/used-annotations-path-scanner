@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace AnnotationsScanner\Scanner;
 
 use Psr\SimpleCache\CacheInterface;
+use Scanner\ScanMode\ScanMode;
 
 class CachedDoctrineAnnotationsScanner implements AnnotationScanner
 {
-    public const CACHE_KEY = 'annotation_scanner';
+    private const CACHE_KEY = 'annotation_scanner';
 
     private AnnotationScanner $nativeScanner;
     private CacheInterface $cache;
@@ -19,7 +20,7 @@ class CachedDoctrineAnnotationsScanner implements AnnotationScanner
         $this->cache = $cache;
     }
 
-    public function scan(): ScanResult
+    public function scan(ScanMode $mode = null): ScanResult
     {
         $key = self::CACHE_KEY;
 
@@ -27,7 +28,7 @@ class CachedDoctrineAnnotationsScanner implements AnnotationScanner
             return $this->cache->get($key);
         }
 
-        $paths = $this->nativeScanner->scan();
+        $paths = $this->nativeScanner->scan($mode);
 
         $this->cache->set($key, $paths);
 

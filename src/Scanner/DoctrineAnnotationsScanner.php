@@ -10,6 +10,7 @@ use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use Scanner\ScanMode\ScanMode;
 
 class DoctrineAnnotationsScanner implements AnnotationScanner
 {
@@ -26,7 +27,7 @@ class DoctrineAnnotationsScanner implements AnnotationScanner
         $this->annotationReader = $reader ?? new AnnotationReader();
     }
 
-    public function scan(): ScanResult
+    public function scan(ScanMode $mode = null): ScanResult
     {
         /**
          * @var $foundMethods ReflectionMethod[]
