@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AnnotationsScanner\Scanner;
 
-use Scanner\AnnotationsScanner\ScanMode;
+use AnnotationsScanner\Scanner\ScanMode\ScanMode;
 
 interface AnnotationScanner
 {

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AnnotationsScanner\Scanner;
 
+use AnnotationsScanner\Scanner\ScanMode\ScanMode;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use Scanner\AnnotationsScanner\ScanMode;
 
 class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
 {

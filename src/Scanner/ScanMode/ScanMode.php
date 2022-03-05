@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Scanner\AnnotationsScanner;
+namespace AnnotationsScanner\Scanner\ScanMode;
 
 interface ScanMode
 {
