@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AnnotationsScanner\Scanner;
 
-use Composer\Autoload\ClassMapGenerator;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
@@ -12,7 +11,7 @@ use ReflectionException;
 use ReflectionMethod;
 use Scanner\ScanMode\ScanMode;
 
-class DoctrineAnnotationsScanner implements AnnotationScanner
+class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
 {
     private Reader $annotationReader;
     private AnnotationsToSearchCollection $annotationsToSearchCollection;
@@ -86,6 +85,6 @@ class DoctrineAnnotationsScanner implements AnnotationScanner
      */
     private function getClassesNames(): array
     {
-        return array_keys(ClassMapGenerator::createMap($this->basePath));
+        return $this->getClassFinder()->getClassesNames($this->basePath);
     }
 }
