@@ -9,7 +9,7 @@ use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use Scanner\ScanMode\ScanMode;
+use Scanner\AnnotationsScanner\ScanMode;
 
 class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
 {

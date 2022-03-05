@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AnnotationsScanner\Scanner;
 
 use Psr\SimpleCache\CacheInterface;
-use Scanner\ScanMode\ScanMode;
+use Scanner\AnnotationsScanner\ScanMode;
 
 class CachedDoctrineAnnotationsScanner implements AnnotationScanner
 {
