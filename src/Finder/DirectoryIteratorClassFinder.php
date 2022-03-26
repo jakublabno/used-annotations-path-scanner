@@ -20,13 +20,15 @@ class DirectoryIteratorClassFinder implements ClassFinder
         $classesNames = [];
 
         foreach ($iterator as $file) {
+            $fileName = $file->__toString();
+
             if ($excludeRegex = $this->excludeRegex) {
-                if (preg_match($excludeRegex, $file)) {
+                if (preg_match($excludeRegex, $fileName)) {
                     continue;
                 }
             }
 
-            if ($className = $this->getClassNameFromFile($file->__toString())) {
+            if ($className = $this->getClassNameFromFile($fileName)) {
                 $classesNames[] = $className;
             }
         }
