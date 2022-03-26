@@ -26,6 +26,16 @@ class ScannerFactory
             ->build();
     }
 
+    public static function createWithDefaultReaderDirectoryIteratorScanImplAndCache(string $basePath, CacheInterface $cache, string ...$annotations): AnnotationScanner
+    {
+        return (new ScannerBuilder())
+            ->withAnnotations(...$annotations)
+            ->withBasePath($basePath)
+            ->withDirectoryIteratorScanMethod()
+            ->withCache($cache)
+            ->build();
+    }
+
     public static function createWithDefaultReaderAndCache(string $basePath, CacheInterface $cache, string ...$annotations): AnnotationScanner
     {
         return (new ScannerBuilder())
