@@ -6,6 +6,7 @@ namespace AnnotationsScanner\Scanner;
 
 use AnnotationsScanner\Scanner\ScanMode\ScanMode;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\DocParser;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
@@ -34,7 +35,12 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
 
         $this->excludeDirectoriesRegex = $excludeDirsRegex;
 
-        $this->annotationReader = $reader ?? new AnnotationReader();
+        $this->annotationReader = $reader ?? call_user_func(function () {
+                $parser = new DocParser();
+                $parser->setIgnoreNotImportedAnnotations(true);
+
+                return new AnnotationReader($parser);
+            });
     }
 
     public function scan(ScanMode $mode = null): ScanResult
