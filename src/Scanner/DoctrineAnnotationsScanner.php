@@ -10,6 +10,7 @@ use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use Throwable;
 
 class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
 {
@@ -81,7 +82,11 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
      */
     private function getMethods(string $className): ?array
     {
-        if (!class_exists($className)) {
+        try {
+            if (!class_exists($className)) {
+                return null;
+            }
+        } catch (Throwable $t) {
             return null;
         }
 
