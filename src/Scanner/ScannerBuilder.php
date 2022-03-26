@@ -15,12 +15,18 @@ class ScannerBuilder
     private ?CacheInterface $cache = null;
     private string $basePath;
     private array $annotationsToSearchFor = [];
+    private string $scanMethod = ScanMethod::COMPOSER;
 
     public function withReader(Reader $reader): self
     {
         $this->reader = $reader;
 
         return $this;
+    }
+
+    public function withDirectoryIteratorScanMethod(): self
+    {
+        $this->scanMethod = ScanMethod::DIRECTORY_ITERATOR;
     }
 
     public function withAnnotations(string ...$annotations): self
@@ -53,9 +59,9 @@ class ScannerBuilder
         $collection = new AnnotationsToSearchCollection(new ArrayIterator($this->annotationsToSearchFor));
 
         if ($this->reader) {
-            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->reader);
+            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod, $this->reader);
         } else {
-            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath);
+            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod);
         }
 
         return new CachedDoctrineAnnotationsScanner($scanner, $this->getCache());

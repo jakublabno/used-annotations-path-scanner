@@ -16,12 +16,19 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
     private Reader $annotationReader;
     private AnnotationsToSearchCollection $annotationsToSearchCollection;
     private string $basePath;
+    private string $scanMethod;
 
-    public function __construct(AnnotationsToSearchCollection $annotationsToSearchCollection, string $basePath, Reader $reader = null)
-    {
+    public function __construct(
+        AnnotationsToSearchCollection $annotationsToSearchCollection,
+        string                        $basePath,
+        string                        $scanMethod,
+        Reader                        $reader = null
+    ) {
         $this->annotationsToSearchCollection = $annotationsToSearchCollection;
 
         $this->basePath = $basePath;
+
+        $this->scanMethod = $scanMethod;
 
         $this->annotationReader = $reader ?? new AnnotationReader();
     }
@@ -85,6 +92,6 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
      */
     private function getClassesNames(): array
     {
-        return $this->getClassFinder()->getClassesNames($this->basePath);
+        return $this->getClassFinder($this->scanMethod)->getClassesNames($this->basePath);
     }
 }
