@@ -27,6 +27,8 @@ class ScannerBuilder
     public function withDirectoryIteratorScanMethod(): self
     {
         $this->scanMethod = ScanMethod::DIRECTORY_ITERATOR;
+
+        return $this;
     }
 
     public function withAnnotations(string ...$annotations): self
