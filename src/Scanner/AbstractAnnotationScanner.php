@@ -10,10 +10,18 @@ use AnnotationsScanner\Finder\DirectoryIteratorClassFinder;
 
 class AbstractAnnotationScanner
 {
+    protected ?string $excludeDirectoriesRegex = null;
+
     protected function getClassFinder(string $scanMethod): ClassFinder
     {
         if ($scanMethod == ScanMethod::DIRECTORY_ITERATOR) {
-            return new DirectoryIteratorClassFinder();
+            $scanner = new DirectoryIteratorClassFinder();
+
+            if ($this->excludeDirectoriesRegex) {
+                $scanner->setExcludeRegex($this->excludeDirectoriesRegex);
+            }
+
+            return $scanner;
         }
 
         return new ComposerClassFinder();

@@ -16,6 +16,14 @@ class ScannerBuilder
     private string $basePath;
     private array $annotationsToSearchFor = [];
     private string $scanMethod = ScanMethod::COMPOSER;
+    private ?string $excludeDirsRegex = null;
+
+    public function withExcludeDirs(string $excludeDirsRegex): self
+    {
+        $this->excludeDirsRegex = $excludeDirsRegex;
+
+        return $this;
+    }
 
     public function withReader(Reader $reader): self
     {
@@ -58,12 +66,16 @@ class ScannerBuilder
             throw BasePathMustBeSetException::create();
         }
 
+        if ($this->excludeDirsRegex && $this->scanMethod == ScanMethod::COMPOSER) {
+            throw new ExcludeDirsNotAvailableException('Exclude function available only when directory scan method is in use');
+        }
+
         $collection = new AnnotationsToSearchCollection(new ArrayIterator($this->annotationsToSearchFor));
 
         if ($this->reader) {
-            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod, $this->reader);
+            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod, $this->excludeDirsRegex, $this->reader);
         } else {
-            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod);
+            $scanner = new DoctrineAnnotationsScanner($collection, $this->basePath, $this->scanMethod, $this->excludeDirsRegex);
         }
 
         return new CachedDoctrineAnnotationsScanner($scanner, $this->getCache());

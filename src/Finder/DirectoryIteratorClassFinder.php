@@ -10,6 +10,8 @@ use RecursiveIteratorIterator;
 
 class DirectoryIteratorClassFinder implements ClassFinder
 {
+    private ?string $excludeRegex = null;
+
     public function getClassesNames(string $basePath): array
     {
         $directory = new RecursiveDirectoryIterator($basePath, FilesystemIterator::SKIP_DOTS);
@@ -18,12 +20,23 @@ class DirectoryIteratorClassFinder implements ClassFinder
         $classesNames = [];
 
         foreach ($iterator as $file) {
+            if ($excludeRegex = $this->excludeRegex) {
+                if (preg_match($excludeRegex, $file)) {
+                    continue;
+                }
+            }
+
             if ($className = $this->getClassNameFromFile($file->__toString())) {
                 $classesNames[] = $className;
             }
         }
 
         return $classesNames;
+    }
+
+    public function setExcludeRegex(string $regex): void
+    {
+        $this->excludeRegex = $regex;
     }
 
     private function getClassNameFromFile(string $fileName): ?string

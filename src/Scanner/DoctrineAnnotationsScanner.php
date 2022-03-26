@@ -22,6 +22,7 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
         AnnotationsToSearchCollection $annotationsToSearchCollection,
         string                        $basePath,
         string                        $scanMethod,
+        ?string                       $excludeDirsRegex = null,
         Reader                        $reader = null
     ) {
         $this->annotationsToSearchCollection = $annotationsToSearchCollection;
@@ -29,6 +30,8 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
         $this->basePath = $basePath;
 
         $this->scanMethod = $scanMethod;
+
+        $this->excludeDirectoriesRegex = $excludeDirsRegex;
 
         $this->annotationReader = $reader ?? new AnnotationReader();
     }
