@@ -25,7 +25,7 @@ class CachedDoctrineAnnotationsScanner implements AnnotationScanner
         $key = self::CACHE_KEY;
 
         if ($this->cache->has($key)) {
-            return $this->cache->get($key);
+            return $this->cache->get($key, new ScanResult([]));
         }
 
         $paths = $this->nativeScanner->scan($mode);
