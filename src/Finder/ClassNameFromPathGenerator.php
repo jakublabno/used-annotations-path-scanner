@@ -6,6 +6,9 @@ namespace AnnotationsScanner\Finder;
 
 class ClassNameFromPathGenerator
 {
+    private const TOKEN_NAMESPACE = 'T_NAMESPACE';
+    private const TOKEN_CLASSNAME = 'T_CLASS';
+
     public static function getFullClassNameFromFile(string $path): ?string
     {
         if (is_dir($path)) {
@@ -13,15 +16,34 @@ class ClassNameFromPathGenerator
         }
 
         $file = file_get_contents($path);
+        $tokens = token_get_all($file, TOKEN_PARSE);
 
-        if (!$file) {
-            return null;
+        $namespaceAtLine = null;
+        $classNameAtLine = null;
+
+        foreach ($tokens as $token) {
+            if (!is_array($token)) {
+                continue;
+            }
+
+            list($id, $name, $line) = $token;
+
+            if (token_name($id) == self::TOKEN_NAMESPACE) {
+                $namespaceAtLine = $line;
+            }
+
+            if (token_name($id) == self::TOKEN_CLASSNAME) {
+                $classNameAtLine = $line;
+            }
         }
 
-        preg_match('/(?<=namespace\s)(.*)(?=;).*(?<=class\s)(.*)(?=\s)/sU', $file, $matches);
+        if ($namespaceAtLine && $classNameAtLine) {
+            $splittedFile = explode(PHP_EOL, $file);
 
-        if (isset($matches[1], $matches[2])) {
-            return implode("\\", array_slice($matches, 1, 2));
+            $namespace = rtrim(ltrim($splittedFile[$namespaceAtLine - 1], 'namespace '), ';');
+            $className = rtrim(ltrim($splittedFile[$classNameAtLine - 1], 'class '), ';');
+
+            return $namespace . '\\' . $className;
         }
 
         return null;
