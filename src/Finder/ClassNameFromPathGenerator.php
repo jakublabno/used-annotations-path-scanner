@@ -41,11 +41,18 @@ class ClassNameFromPathGenerator
             $splittedFile = explode(PHP_EOL, $file);
 
             $namespace = rtrim(ltrim($splittedFile[$namespaceAtLine - 1], 'namespace '), ';');
-            $className = rtrim(ltrim($splittedFile[$classNameAtLine - 1], 'class '), ';');
+            $className = self::extractClassNameFromClassLine($splittedFile[$classNameAtLine - 1]);
 
             return $namespace . '\\' . $className;
         }
 
         return null;
+    }
+
+    private static function extractClassNameFromClassLine(string $definition): string
+    {
+        $definition = ltrim($definition, 'class ');
+
+        return preg_replace('/ .*/', '', $definition);
     }
 }
