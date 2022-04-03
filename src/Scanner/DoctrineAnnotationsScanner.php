@@ -74,7 +74,7 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
                 $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation($foundMethod, $lookedForAnnotation);
 
                 if ($foundAnnotationOnMethod) {
-                    $foundPaths[] = $foundMethod->getDeclaringClass()->getFileName();
+                    $foundPaths[] = $foundMethod->getFileName();
                 }
             }
         }
