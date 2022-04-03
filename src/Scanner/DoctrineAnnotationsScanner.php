@@ -83,20 +83,15 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
     }
 
     /**
-     * @return ReflectionMethod[]
-     * @throws ReflectionException
+     * @return ?ReflectionMethod[]
      */
     private function getMethods(string $className): ?array
     {
         try {
-            if (!class_exists($className)) {
-                return null;
-            }
+            $reflectedClass = new ReflectionClass($className);
         } catch (Throwable $t) {
             return null;
         }
-
-        $reflectedClass = new ReflectionClass($className);
 
         return $reflectedClass->getMethods() ?: null;
     }
