@@ -8,8 +8,9 @@ use AnnotationsScanner\Scanner\ScanMode\ScanMode;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\DocParser;
 use Doctrine\Common\Annotations\Reader;
-use Roave\BetterReflection\BetterReflection;
-use Roave\BetterReflection\Reflection\ReflectionMethod;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 use Throwable;
 
 class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
@@ -70,8 +71,7 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
 
         foreach ($reflectionMethod as $foundMethod) {
             foreach ($this->annotationsToSearchCollection as $lookedForAnnotation) {
-                $methodPointer = $foundMethod->getDeclaringClass()->getName() . '::' . $foundMethod->getName();
-                $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation(new \ReflectionMethod($methodPointer), $lookedForAnnotation);
+                $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation($foundMethod, $lookedForAnnotation);
 
                 if ($foundAnnotationOnMethod) {
                     $foundPaths[] = $foundMethod->getFileName();
@@ -83,14 +83,12 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
     }
 
     /**
-     * @return ?\Roave\BetterReflection\Reflection\ReflectionMethod[]
+     * @return ReflectionMethod[]
      */
     private function getMethods(string $className): ?array
     {
         try {
-            $reflectedClass = (new BetterReflection())
-                ->classReflector()
-                ->reflect($className);
+            $reflectedClass = new ReflectionClass($className);
         } catch (Throwable $t) {
             return null;
         }
