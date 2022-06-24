@@ -3,7 +3,7 @@ Annotated methods scanner
 
 Scanner looks for methods annotated with provided annotations, outputs an array of either filepaths or directories.
 
-[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Latest Stable Version](http://poser.pugx.org/jlabno/annotations-scanner/v)](https://packagist.org/packages/jlabno/annotations-scanner) [![Total Downloads](http://poser.pugx.org/jlabno/annotations-scanner/downloads)](https://packagist.org/packages/jlabno/annotations-scanner) [![Latest Unstable Version](http://poser.pugx.org/jlabno/annotations-scanner/v/unstable)](https://packagist.org/packages/jlabno/annotations-scanner) [![License](http://poser.pugx.org/jlabno/annotations-scanner/license)](https://packagist.org/packages/jlabno/annotations-scanner) [![PHP Version Require](http://poser.pugx.org/jlabno/annotations-scanner/require/php)](https://packagist.org/packages/jlabno/annotations-scanner)
 
 Installation
 ------------
