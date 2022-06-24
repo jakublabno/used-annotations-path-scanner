@@ -31,3 +31,6 @@ jobs:
 
     - name: Run test suite php8.0
       run: make test-php8.0
+
+    - name: Run test suite php8.1
+      run: make test-php8.1
