@@ -26,5 +26,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Run test suite
-      run: make test
+    - name: Run test suite php7.4
+      run: make test-php7.4
+
+    - name: Run test suite php8.0
+      run: make test-php8.0

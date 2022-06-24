@@ -1,7 +1,16 @@
 version: '3.5'
 
 services:
-  php:
-    build: .
+  php-7.4:
+    build:
+      dockerfile: php7.4.Dockerfile
+      context: .
+    volumes:
+      - .:/app
+
+  php-8.0:
+    build:
+      dockerfile: php8.Dockerfile
+      context: .
     volumes:
       - .:/app
