@@ -8,6 +8,7 @@ use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflector\ClassReflector;
 use Roave\BetterReflection\Reflector\DefaultReflector;
+use Roave\BetterReflection\SourceLocator\Ast\Exception\ParseToAstFailure;
 use Roave\BetterReflection\SourceLocator\Type\AbstractSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
 
@@ -47,6 +48,10 @@ class ClassNameFromPathGeneratorReflectionBased
             $reflectAllClassesMethod = self::NEW_VERSION_REFLECT_CLASSES_METHOD;
         }
 
-        return (new $locatorClass($locator))->$reflectAllClassesMethod();
+        try {
+            return (new $locatorClass($locator))->$reflectAllClassesMethod();
+        } catch (ParseToAstFailure $exception) {
+            return [];
+        }
     }
 }
