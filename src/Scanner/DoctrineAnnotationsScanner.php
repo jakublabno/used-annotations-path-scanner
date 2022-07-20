@@ -12,7 +12,8 @@ use ReflectionClass;
 use ReflectionMethod;
 use Throwable;
 
-class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
+class DoctrineAnnotationsScanner extends AbstractAnnotationScanner
+    implements AnnotationScanner
 {
     private Reader $annotationReader;
     private AnnotationsToSearchCollection $annotationsToSearchCollection;
@@ -21,10 +22,10 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
 
     public function __construct(
         AnnotationsToSearchCollection $annotationsToSearchCollection,
-        string                        $basePath,
-        string                        $scanMethod,
-        ?string                       $excludeDirsRegex = null,
-        Reader                        $reader = null
+        string $basePath,
+        string $scanMethod,
+        ?string $excludeDirsRegex = null,
+        Reader $reader = null
     ) {
         $this->annotationsToSearchCollection = $annotationsToSearchCollection;
 
@@ -58,19 +59,25 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
         $filesPaths = [];
 
         foreach ($foundMethods as $foundMethod) {
-            $filesPaths[] = $this->getUsedAnnotationsClassPaths(...$foundMethod);
+            $filesPaths[] = $this->getUsedAnnotationsClassPaths(...
+                $foundMethod);
         }
 
         return new ScanResult(array_unique(array_merge(...$filesPaths)));
     }
 
-    private function getUsedAnnotationsClassPaths(ReflectionMethod ...$reflectionMethod): array
-    {
+    private function getUsedAnnotationsClassPaths(
+        ReflectionMethod ...$reflectionMethod
+    ): array {
         $foundPaths = [];
 
         foreach ($reflectionMethod as $foundMethod) {
-            foreach ($this->annotationsToSearchCollection as $lookedForAnnotation) {
-                $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation($foundMethod, $lookedForAnnotation);
+            foreach (
+                $this->annotationsToSearchCollection as $lookedForAnnotation
+            ) {
+                $foundAnnotationOnMethod
+                    = $this->annotationReader->getMethodAnnotation($foundMethod,
+                    $lookedForAnnotation);
 
                 if ($foundAnnotationOnMethod) {
                     $foundPaths[] = $foundMethod->getFileName();
@@ -86,7 +93,11 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
      */
     private function getMethods(string $className): ?array
     {
-        if (!class_exists($className)) {
+        try {
+            if ( ! class_exists($className)) {
+                return null;
+            }
+        } catch (Throwable $t) {
             return null;
         }
 
@@ -104,6 +115,7 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
      */
     private function getClassesNames(): array
     {
-        return $this->getClassFinder($this->scanMethod)->getClassesNames($this->basePath);
+        return $this->getClassFinder($this->scanMethod)
+            ->getClassesNames($this->basePath);
     }
 }
