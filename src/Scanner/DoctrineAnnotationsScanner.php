@@ -8,9 +8,9 @@ use AnnotationsScanner\Scanner\ScanMode\ScanMode;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\DocParser;
 use Doctrine\Common\Annotations\Reader;
+use ReflectionClass;
 use ReflectionMethod;
-use Roave\BetterReflection\Reflection\ReflectionClass;
-use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
+use Throwable;
 
 class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements AnnotationScanner
 {
@@ -30,10 +30,6 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
 
         $this->basePath = $basePath;
 
-        set_include_path(get_include_path() . PATH_SEPARATOR . $basePath);
-        spl_autoload_extensions('.php');
-        spl_autoload_register();
-
         $this->scanMethod = $scanMethod;
 
         $this->excludeDirectoriesRegex = $excludeDirsRegex;
@@ -49,7 +45,7 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
     public function scan(ScanMode $mode = null): ScanResult
     {
         /**
-         * @var $foundMethods \Roave\BetterReflection\Reflection\ReflectionMethod[]
+         * @var $foundMethods ReflectionMethod[]
          */
         $foundMethods = [];
 
@@ -68,15 +64,13 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
         return new ScanResult(array_unique(array_merge(...$filesPaths)));
     }
 
-    private function getUsedAnnotationsClassPaths(\Roave\BetterReflection\Reflection\ReflectionMethod ...$reflectionMethod): array
+    private function getUsedAnnotationsClassPaths(ReflectionMethod ...$reflectionMethod): array
     {
         $foundPaths = [];
 
         foreach ($reflectionMethod as $foundMethod) {
             foreach ($this->annotationsToSearchCollection as $lookedForAnnotation) {
-                $nativeReflection = new ReflectionMethod($foundMethod->getDeclaringClass()->getName(), $foundMethod->getName());
-
-                $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation($nativeReflection, $lookedForAnnotation);
+                $foundAnnotationOnMethod = $this->annotationReader->getMethodAnnotation($foundMethod, $lookedForAnnotation);
 
                 if ($foundAnnotationOnMethod) {
                     $foundPaths[] = $foundMethod->getFileName();
@@ -97,8 +91,8 @@ class DoctrineAnnotationsScanner extends AbstractAnnotationScanner implements An
         }
 
         try {
-            $reflectedClass = ReflectionClass::createFromName($className);
-        } catch (IdentifierNotFound $t) {
+            $reflectedClass = new ReflectionClass($className);
+        } catch (Throwable $t) {
             return null;
         }
 

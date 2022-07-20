@@ -43,6 +43,6 @@ class DirectoryIteratorClassFinder implements ClassFinder
 
     private function getClassNameFromFile(string $fileName): ?string
     {
-        return ClassNameFromPathGeneratorReflectionBased::getFullClassNameFromFile($fileName);
+        return ClassNameFromPathGenerator::getFullClassNameFromFile($fileName);
     }
 }
