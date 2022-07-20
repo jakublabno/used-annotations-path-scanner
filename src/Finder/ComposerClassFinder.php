@@ -8,8 +8,14 @@ use Composer\Autoload\ClassMapGenerator;
 
 class ComposerClassFinder implements ClassFinder
 {
+    use ExcludeTrait;
+
     public function getClassesNames(string $basePath): array
     {
-        return array_keys(ClassMapGenerator::createMap($basePath));
+        $map = $this->excludeRegex
+            ? ClassMapGenerator::createMap($basePath, $this->excludeRegex)
+            : ClassMapGenerator::createMap($basePath);
+
+        return array_keys($map);
     }
 }

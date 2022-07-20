@@ -66,10 +66,6 @@ class ScannerBuilder
             throw BasePathMustBeSetException::create();
         }
 
-        if ($this->excludeDirsRegex && $this->scanMethod == ScanMethod::COMPOSER) {
-            throw new ExcludeDirsNotAvailableException('Exclude function available only when directory scan method is in use');
-        }
-
         $collection = new AnnotationsToSearchCollection(new ArrayIterator($this->annotationsToSearchFor));
 
         if ($this->reader) {

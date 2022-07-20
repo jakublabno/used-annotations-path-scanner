@@ -10,7 +10,7 @@ use RecursiveIteratorIterator;
 
 class DirectoryIteratorClassFinder implements ClassFinder
 {
-    private ?string $excludeRegex = null;
+    use ExcludeTrait;
 
     public function getClassesNames(string $basePath): array
     {
@@ -34,11 +34,6 @@ class DirectoryIteratorClassFinder implements ClassFinder
         }
 
         return $classesNames;
-    }
-
-    public function setExcludeRegex(string $regex): void
-    {
-        $this->excludeRegex = $regex;
     }
 
     private function getClassNameFromFile(string $fileName): ?string

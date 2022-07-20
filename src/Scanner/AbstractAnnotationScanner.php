@@ -24,6 +24,12 @@ class AbstractAnnotationScanner
             return $scanner;
         }
 
-        return new ComposerClassFinder();
+        $scanner = new ComposerClassFinder();
+
+        if ($this->excludeDirectoriesRegex) {
+            $scanner->setExcludeRegex($this->excludeDirectoriesRegex);
+        }
+
+        return $scanner;
     }
 }
