@@ -9,17 +9,17 @@ help:
 
 
 install-dependencies: ##install and update composer dependencies
-	docker-compose run --rm -T php composer update
+	docker compose run --rm -T php-8.1 composer update
 
 
 test-php7.4: ## run tests
-	docker-compose run --rm -T php-7.4 composer update
-	docker-compose run --rm -T php-7.4 php vendor/bin/phpunit --configuration phpunit.dist.xml
+	docker compose run --rm -T php-7.4 composer update
+	docker compose run --rm -T php-7.4 php vendor/bin/phpunit --configuration phpunit.dist.xml
 
 test-php8.0: ## run tests
-	docker-compose run --rm -T php-8.0 composer update
-	docker-compose run --rm -T php-8.0 php vendor/bin/phpunit --configuration phpunit.dist.xml
+	docker compose run --rm -T php-8.0 composer update
+	docker compose run --rm -T php-8.0 php vendor/bin/phpunit --configuration phpunit.dist.xml
 
 test-php8.1: ## run tests
-	docker-compose run --rm -T php-8.1 composer update
-	docker-compose run --rm -T php-8.1 php vendor/bin/phpunit --configuration phpunit.dist.xml
+	docker compose run --rm -T php-8.1 composer update
+	docker compose run --rm -T php-8.1 php vendor/bin/phpunit --configuration phpunit.dist.xml
